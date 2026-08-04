@@ -8,6 +8,7 @@
 #include "File.h"
 
 #include "Text.h"
+#include "Texture.h"
 
 // systems
 #include "Renderer.h"
