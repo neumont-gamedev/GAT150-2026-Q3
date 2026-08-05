@@ -84,8 +84,8 @@ int main()
     game.Initialize();
 
     // create texture
-    std::shared_ptr<Texture> texture = std::make_shared<Texture>();
-    texture->Load("textures/beast.png", Engine::Get().GetRenderer());
+    //std::shared_ptr<Texture> texture = std::make_shared<Texture>();
+    //texture->Load("textures/player.png", Engine::Get().GetRenderer());
 
     // MAIN LOOP
     bool quit = false;
@@ -117,7 +117,7 @@ int main()
         Engine::Get().GetRenderer().Clear();
 
         game.Draw(Engine::Get().GetRenderer());
-        Engine::Get().GetRenderer().DrawTexture(texture.get(), 30, 30);
+        Engine::Get().GetRenderer().DrawTexture(*Resources().Get<Texture>("textures/player.png", Engine::Get().GetRenderer()), 30, 30);
 
         Engine::Get().GetPS().Draw(Engine::Get().GetRenderer());
         Engine::Get().GetRenderer().Present();
