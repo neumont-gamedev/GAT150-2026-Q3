@@ -10,6 +10,7 @@
 #include <vector>
 #include <map>
 #include <memory>
+#include <random>
 
 using namespace nu;
 
@@ -23,9 +24,46 @@ public:
     Object& operator = (const Object& object) { std::cout << "assignment\n"; return *this; }
 };
 
+uint32_t seed = 1234;
+
+uint32_t RNG()
+{
+    seed = (seed * 1103515245) + 12345;
+    return seed;
+}
+
 
 int main()
 {
+    /*
+    // rand()
+    for (size_t i = 0; i < 10; i++) std::cout << RNG() << " ";
+    std::cout << std::endl;
+    seed = 1234;
+    for (size_t i = 0; i < 10; i++) std::cout << RNG() << " ";
+    std::cout << std::endl;
+
+    //srand((unsigned int)time(NULL));
+    SeedRandom((unsigned int)time(NULL)); //-> srand((unsigned int)time(NULL));
+    for (size_t i = 0; i < 10; i++) std::cout << rand() << " ";
+    std::cout << std::endl;
+
+    // random<>
+    std::random_device randomDevice;
+    std::cout << randomDevice.min() << std::endl;
+    std::cout << randomDevice.max() << std::endl;
+    std::cout << randomDevice.entropy() << std::endl;
+
+    std::mt19937 generator(randomDevice());
+
+    std::uniform_int_distribution<> dist(0, 20);
+    for (size_t i = 0; i < 10; i++) std::cout << dist(generator) << " ";
+    std::cout << std::endl;
+
+    std::uniform_real_distribution<float> distReal(-10.f, 20.0f);
+    for (size_t i = 0; i < 10; i++) std::cout << distReal(generator) << " ";
+    std::cout << std::endl;
+
     std::cout << "================object===================\n";
     {
         Object objectA;
@@ -75,6 +113,7 @@ int main()
         std::cout << objectC.use_count() << std::endl;
     }
     std::cout << objectC.use_count() << std::endl;
+    */
 
     SetWorkingDirectory("assets");
     // INITIALIZATION

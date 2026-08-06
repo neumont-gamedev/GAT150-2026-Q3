@@ -34,7 +34,7 @@ void Player::Update(float dt)
 		nu::Color colors[3] = { { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 0.0f } };
 		particle.color = colors[nu::RandomInt(3)];
 		particle.lifespan = nu::RandomFloat(0.5f, 1.5f);
-		particle.velocity = nu::Vector2{ nu::RandomFloat(-30.0f, -100.0f), 0.0f}.Rotate((m_transform.rotation + nu::RandomInt(-30, 30)) * nu::DegToRad);
+		particle.velocity = nu::Vector2{ nu::RandomFloat(-100.0f, -30.0f), 0.0f}.Rotate((m_transform.rotation + nu::RandomInt(-30, 30)) * nu::DegToRad);
 
 		nu::Engine::Get().GetPS().AddParticle(particle);
 	}
