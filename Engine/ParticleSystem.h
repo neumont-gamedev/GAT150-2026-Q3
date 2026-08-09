@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector2.h"
 #include "Vector3.h"
+#include "Texture.h"
 
 #include <vector>
 
@@ -14,6 +15,7 @@ namespace nu
 		Vector2 position{ 0, 0 };
 		Vector2 velocity{ 0, 0 };
 		Color color{ 0, 0, 0 };
+		res_t<Texture> texture;
 	};
 
 	class ParticleSystem 

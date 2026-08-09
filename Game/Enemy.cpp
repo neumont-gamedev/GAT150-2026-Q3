@@ -20,15 +20,17 @@ void Enemy::Update(float dt)
 		AddVelocity(forward * m_speed * dt);
 	}
 
-	// particle system
 	nu::Particle particle;
-	particle.position = m_transform.position;
-	particle.color = { 0.0f, 1.0f, 0.0f };
-	particle.lifespan = nu::RandomFloat(0.5f, 1.5f);
-	particle.velocity = { nu::RandomFloat(-200.0f, 200.0f), nu::RandomFloat(-200.0f, 200.0f) };
+	nu::Vector2 offset{ -20.0f, 0.0f };
+	offset = offset.Rotate(m_transform.rotation * nu::DegToRad);
+	particle.position = m_transform.position + offset;
 
+	particle.texture = nu::Resources().Get<nu::Texture>("textures/particle.png", nu::Engine::Get().GetRenderer());
+	particle.lifespan = nu::RandomFloat(0.15f, 0.5f);
+	particle.velocity = nu::Vector2{ nu::RandomFloat(-100.0f, -30.0f), 0.0f }.Rotate((m_transform.rotation + nu::RandomInt(-30, 30)) * nu::DegToRad);
 
 	nu::Engine::Get().GetPS().AddParticle(particle);
+
 
 	Actor::Update(dt);
 }
@@ -52,8 +54,8 @@ void Enemy::OnCollision(Actor* other)
 			{
 				nu::Particle particle;
 				particle.position = m_transform.position;
-				particle.color = { nu::RandomFloat(), nu::RandomFloat(), nu::RandomFloat() };
-				particle.lifespan = nu::RandomFloat(0.5f, 2.0f);
+				particle.texture = nu::Resources().Get<nu::Texture>("textures/particle.png", nu::Engine::Get().GetRenderer());
+				particle.lifespan = nu::RandomFloat(0.15f, 0.75f);
 				particle.velocity = { nu::RandomFloat(-600.0f, 600.0f), nu::RandomFloat(-600.0f, 600.0f) };
 
 				nu::Engine::Get().GetPS().AddParticle(particle);

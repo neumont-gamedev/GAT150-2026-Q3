@@ -31,8 +31,7 @@ void Player::Update(float dt)
 		offset = offset.Rotate(m_transform.rotation * nu::DegToRad);
 		particle.position = m_transform.position + offset;
 
-		nu::Color colors[3] = { { 1.0f, 1.0f, 1.0f }, { 1.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 0.0f } };
-		particle.color = colors[nu::RandomInt(3)];
+		particle.texture = nu::Resources().Get<nu::Texture>("textures/particle.png", nu::Engine::Get().GetRenderer());
 		particle.lifespan = nu::RandomFloat(0.5f, 1.5f);
 		particle.velocity = nu::Vector2{ nu::RandomFloat(-100.0f, -30.0f), 0.0f}.Rotate((m_transform.rotation + nu::RandomInt(-30, 30)) * nu::DegToRad);
 
@@ -51,9 +50,9 @@ void Player::Update(float dt)
 		BulletDesc desc;
 		desc.name = "Bullet";
 		desc.tag = "PlayerBullet";
-		desc.model = assets::bulletModel;
+		desc.texture = nu::Resources().Get<nu::Texture>("textures/bullet.png", nu::Engine::Get().GetRenderer());
 		desc.transform = m_transform;
-		desc.transform.scale = 5.0f;
+		desc.transform.scale = 1.0f;
 		desc.speed = 1000.0f;
 		desc.lifespan = 1.0f;
 		

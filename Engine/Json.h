@@ -4,6 +4,8 @@
 #include <rapidjson/document.h>
 #include <string>
 
+#define JSON_READ(value, data) nu::json::Read(value, #data, data)
+
 namespace nu::json
 {
 	bool Load(const std::string& filename, rapidjson::Document& document);

@@ -11,6 +11,8 @@
 #include <map>
 #include <memory>
 #include <random>
+#include <fstream>
+
 
 using namespace nu;
 
@@ -18,11 +20,94 @@ int main()
 {
     SetWorkingDirectory("assets");
 
-    // file
-    std::string text;
-    nu::ReadTextFile("data/text.txt", text);
-    std::cout << text << std::endl;
+    {
+        // open file for read (input file)
+        std::ifstream file("data/text.txt");
+        if (file.is_open())
+        {
+            std::string str;
+            while (std::getline(file, str))
+            {
+                std::cout << str << std::endl;
+            }
+        }
+        file.close();
+    }
 
+    {
+        // open file for write (output file)
+        std::ofstream file("data/text.txt", std::ios::app);
+        if (file.is_open())
+        {
+            file << "Hello World\n";
+            
+        }
+        file.close();
+    }
+
+    {
+        // open file for read/write (input/output file)
+        std::fstream file("data/text.txt", std::ios::in | std::ios::out | std::ios::app);
+        if (file.is_open())
+        {
+            file << "Add a new line\n";
+            file.seekg(0);
+            std::string str;
+            while (std::getline(file, str))
+            {
+                std::cout << str << std::endl;
+            }
+
+        }
+        file.close();
+    }
+
+    {
+        // open file for read/write (input/output file)
+        std::string name;
+        int score = 0;
+        bool isAlive = false;
+
+        bool save = false;
+        if (save)
+        {
+            name = "Raymond Maple";
+            score = 100;
+            isAlive = true;
+
+            // write game data to file
+            std::ofstream file("data/game.txt");
+            if (file.is_open())
+            {
+                file << name << std::endl;
+                file << score << std::endl;
+                file << std::boolalpha << isAlive << std::endl;
+            }
+            file.close();
+        }
+
+        bool load = true;
+        if (load)
+        {
+            // read game data from file
+            std::ifstream file("data/game.txt");
+            if (file.is_open())
+            {
+                std::getline(file, name);
+                //file >> name;
+                file >> score;
+                file >> std::boolalpha >> isAlive;
+
+                std::cout << name << std::endl;
+                std::cout << score << std::endl;
+                std::cout << isAlive << std::endl;
+            }
+            file.close();
+        }
+    }
+
+    //return 0;
+        
     // load the json data from a file
     std::string buffer;
     if (ReadTextFile("data/data.json", buffer))
@@ -63,8 +148,7 @@ int main()
         }
     }
 
-
-    return 0;
+    //return 0;
 
     // INITIALIZATION
     Engine::Get().Initialize();
