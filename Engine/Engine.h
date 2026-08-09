@@ -6,6 +6,7 @@
 #include "Transform.h"
 #include "MathUtils.h"
 #include "File.h"
+#include "Json.h"
 
 #include "Text.h"
 #include "Texture.h"
