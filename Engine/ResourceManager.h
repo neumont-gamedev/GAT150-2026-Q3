@@ -46,6 +46,8 @@ namespace nu
 			return resource;
 		}
 
+		std::cout << "load: " << name << std::endl;
+
 		// resource doesn't exist, create and load
 		res_t<T> resource = std::make_shared<T>();
 		if (!resource->Load(name, std::forward<Args>(args)...))

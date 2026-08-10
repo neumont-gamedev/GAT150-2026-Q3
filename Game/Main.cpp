@@ -21,7 +21,7 @@ int main()
     SetWorkingDirectory("assets");
 
     {
-        // open file for read (input file)
+        // read file (input file)
         std::ifstream file("data/text.txt");
         if (file.is_open())
         {
@@ -31,124 +31,90 @@ int main()
                 std::cout << str << std::endl;
             }
         }
-        file.close();
-    }
-
-    {
-        // open file for write (output file)
-        std::ofstream file("data/text.txt", std::ios::app);
-        if (file.is_open())
+        else
         {
-            file << "Hello World\n";
-            
+            std::cout << "could not load: data/text.txt\n";
         }
         file.close();
     }
 
     {
-        // open file for read/write (input/output file)
+        // write file (output file)
+        std::ofstream file("data/text.txt", std::ios::app);
+        if (file.is_open())
+        {
+            file << "Have a good day.\n";
+        }
+    }
+
+    {
+        // read / write (input / output file)
         std::fstream file("data/text.txt", std::ios::in | std::ios::out | std::ios::app);
         if (file.is_open())
         {
-            file << "Add a new line\n";
+            // input
+            file << "Add a line.\n";
             file.seekg(0);
+            // output
             std::string str;
             while (std::getline(file, str))
             {
                 std::cout << str << std::endl;
             }
-
         }
-        file.close();
     }
 
     {
-        // open file for read/write (input/output file)
         std::string name;
-        int score = 0;
-        bool isAlive = false;
+        int score;
+        bool isAlive;
 
+        // save game data
         bool save = false;
         if (save)
         {
-            name = "Raymond Maple";
-            score = 100;
+            name = "Raymond L Maple";
+            score = 1234;
             isAlive = true;
 
-            // write game data to file
+            // save game data
             std::ofstream file("data/game.txt");
             if (file.is_open())
             {
-                file << name << std::endl;
-                file << score << std::endl;
-                file << std::boolalpha << isAlive << std::endl;
+                file << name << "\n";
+                file << score << "\n";
+                file << std::boolalpha << isAlive << "\n";
             }
-            file.close();
         }
 
+        // load game data
         bool load = true;
         if (load)
         {
-            // read game data from file
+            // read file (input file)
             std::ifstream file("data/game.txt");
             if (file.is_open())
             {
                 std::getline(file, name);
-                //file >> name;
-                file >> score;
+
+                std::string str;
+                std::getline(file, str);
+
+                score = std::stoi(str);
+                //file >> score;
                 file >> std::boolalpha >> isAlive;
-
-                std::cout << name << std::endl;
-                std::cout << score << std::endl;
-                std::cout << isAlive << std::endl;
             }
-            file.close();
         }
+
+        // display game data
+        std::cout << name << std::endl;
+        std::cout << score << std::endl;
+        std::cout << isAlive << std::endl;
+
     }
 
-    //return 0;
-        
-    // load the json data from a file
-    std::string buffer;
-    if (ReadTextFile("data/data.json", buffer))
-    {
-        // show the contents of the json file (debug)
-        std::cout << buffer << std::endl;
 
-        // create json document from the json file contents
-        rapidjson::Document document;
-        if (json::Load("data/data.json", document))
-        {
-            // read/show the data from the json file
-            std::string name;
-            int age;
-            float speed;
-            bool isAwake;
-            nu::Vector2 position;
-            nu::Vector3 color;
-
-            // read the json data
-            nu::json::Read(document, "name", name);
-            nu::json::Read(document, "age", age);
-            nu::json::Read(document, "speed", speed);
-            nu::json::Read(document, "isAwake", isAwake);
-            nu::json::Read(document, "position", position);
-            nu::json::Read(document, "color", color);
-
-            // show the data
-            std::cout << name << " " << age << " " << speed << " " << isAwake << std::endl;
-            std::cout << position.x << " " << position.y << std::endl;
-            std::cout << color.r << " " << color.g << " " << color.b << " " << std::endl;
-            
-            // read the age data (int) from the json
-            //int age;
-            //json::Read(document, "age", age);
-            // show the age data
-            //std::cout << age << std::endl;
-        }
-    }
-
-    //return 0;
+    return 0;
 
     // INITIALIZATION
     Engine::Get().Initialize();
