@@ -20,99 +20,39 @@ int main()
 {
     SetWorkingDirectory("assets");
 
+    // load the json data from a file
+    std::string buffer;
+    if (ReadTextFile("data/data.json", buffer))
     {
-        // read file (input file)
-        std::ifstream file("data/text.txt");
-        if (file.is_open())
-        {
-            std::string str;
-            while (std::getline(file, str))
-            {
-                std::cout << str << std::endl;
-            }
-        }
-        else
-        {
-            std::cout << "could not load: data/text.txt\n";
-        }
-        file.close();
-    }
+        // show the contents of the json file (debug)
+        std::cout << buffer << std::endl;
 
-    {
-        // write file (output file)
-        std::ofstream file("data/text.txt", std::ios::app);
-        if (file.is_open())
+        // create json document from the json file contents
+        rapidjson::Document document;
+        if (json::Load("data/data.json", document))
         {
-            file << "Have a good day.\n";
-        }
-    }
+            // read/show the data from the json file
+            std::string name;
+            int age;
+            float speed;
+            bool isAwake;
+            nu::Vector2 position;
+            nu::Vector3 color;
 
-    {
-        // read / write (input / output file)
-        std::fstream file("data/text.txt", std::ios::in | std::ios::out | std::ios::app);
-        if (file.is_open())
-        {
-            // input
-            file << "Add a line.\n";
-            file.seekg(0);
-            // output
-            std::string str;
-            while (std::getline(file, str))
-            {
-                std::cout << str << std::endl;
-            }
+            // read the json data
+            nu::json::Read(document, "name", name);
+            nu::json::Read(document, "age", age);
+            nu::json::Read(document, "speed", speed);
+            nu::json::Read(document, "isAwake", isAwake);
+            nu::json::Read(document, "position", position);
+            nu::json::Read(document, "color", color);
+
+            // show the data
+            std::cout << name << " " << age << " " << speed << " " << isAwake << std::endl;
+            std::cout << position.x << " " << position.y << std::endl;
+            std::cout << color.r << " " << color.g << " " << color.b << " " << std::endl;
         }
     }
-
-    {
-        std::string name;
-        int score;
-        bool isAlive;
-
-        // save game data
-        bool save = false;
-        if (save)
-        {
-            name = "Raymond L Maple";
-            score = 1234;
-            isAlive = true;
-
-            // save game data
-            std::ofstream file("data/game.txt");
-            if (file.is_open())
-            {
-                file << name << "\n";
-                file << score << "\n";
-                file << std::boolalpha << isAlive << "\n";
-            }
-        }
-
-        // load game data
-        bool load = true;
-        if (load)
-        {
-            // read file (input file)
-            std::ifstream file("data/game.txt");
-            if (file.is_open())
-            {
-                std::getline(file, name);
-
-                std::string str;
-                std::getline(file, str);
-
-                score = std::stoi(str);
-                //file >> score;
-                file >> std::boolalpha >> isAlive;
-            }
-        }
-
-        // display game data
-        std::cout << name << std::endl;
-        std::cout << score << std::endl;
-        std::cout << isAlive << std::endl;
-
-    }
-
 
     return 0;
 
