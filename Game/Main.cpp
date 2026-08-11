@@ -13,11 +13,117 @@
 #include <random>
 #include <fstream>
 
-
 using namespace nu;
 
+class Animal
+{
+public:
+    virtual void speak() { std::cout << "???"; }
+};
+
+class Cat : public Animal
+{
+    void speak() override { std::cout << "meow"; }
+};
+
+class Dog : public Animal
+{
+    void speak() override { std::cout << "ruff"; }
+};
+
+class Bird : public Animal
+{
+    void speak() override { std::cout << "chep"; }
+};
+
+/*
+enum class Type
+{
+    Cat = 1,
+    Dog,
+    Bird
+};
+
+Animal* AnimalFactory(Type id)
+{
+    Animal* animal = nullptr;
+
+    switch (id)
+    {
+    case Type::Cat:
+        animal = new Cat;
+        break;
+    case Type::Dog:
+        animal = new Dog;
+        break;
+    case Type::Bird:
+        animal = new Bird;
+        break;
+    }
+
+    return animal;
+}
+*/
+
+Animal* AnimalFactory(const std::string& id)
+{
+    Animal* animal = nullptr;
+
+
+    if (nu::ToLower(id) == "cat") animal = new Cat;
+    else if (nu::EqualsIgnoreCase(id, "Dog")) animal = new Dog;
+    else if (id == "Bird") animal = new Bird;
+
+    return animal;
+}
+
+/*
+class ICreator
+{
+public:
+    virtual ~ICreator() = default;
+    virtual std::unique_ptr<Animal> Create() = 0;
+};
+
+template <typename T>
+class Creator : public ICreator
+{
+public:
+    std::unique_ptr<Animal> Create() override { return std::make_unique<T>(); }
+};
+
+std::map<std::string, std::unique_ptr<ICreator>> registry;
+*/
 int main()
 {
+    Factory::Instance().Register<Actor>("Actor");
+    auto actor = Factory::Instance().Create("Actor");
+    std::cout << actor->IsActive() << std::endl;
+    
+
+
+
+
+    //registry["Cat"] = std::make_unique<Creator<Cat>>();
+    //registry["Dog"] = std::make_unique<Creator<Dog>>();
+
+    //{
+    //    auto animal = registry["Dog"]->Create();
+    //    animal->speak();
+    //}
+
+
+    //std::string selection;
+
+    //std::cout << "Select Animal: ";
+    //std::cin >> selection;
+
+    //auto animal = AnimalFactory(selection);
+    //if (animal) animal->speak();
+
+
+    return 0;
+
     SetWorkingDirectory("assets");
 
     // load the json data from a file
@@ -40,12 +146,12 @@ int main()
             nu::Vector3 color;
 
             // read the json data
-            nu::json::Read(document, "name", name);
-            nu::json::Read(document, "age", age);
-            nu::json::Read(document, "speed", speed);
-            nu::json::Read(document, "isAwake", isAwake);
-            nu::json::Read(document, "position", position);
-            nu::json::Read(document, "color", color);
+            JSON_READ(document, name);
+            JSON_READ(document, age);
+            JSON_READ(document, speed);
+            JSON_READ(document, isAwake);
+            JSON_READ(document, position);
+            JSON_READ(document, color);
 
             // show the data
             std::cout << name << " " << age << " " << speed << " " << isAwake << std::endl;
@@ -54,7 +160,7 @@ int main()
         }
     }
 
-    return 0;
+    //return 0;
 
     // INITIALIZATION
     Engine::Get().Initialize();
