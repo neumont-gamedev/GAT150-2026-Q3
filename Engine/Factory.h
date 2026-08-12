@@ -58,7 +58,6 @@ namespace nu
     {
         
         std::string lowerName = ToLower(name);
-
         if (!m_registry.contains(lowerName))
         {
             std::cerr << "Object not registered: " << name << std::endl;

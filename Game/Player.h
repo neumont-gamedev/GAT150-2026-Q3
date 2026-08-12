@@ -20,6 +20,10 @@ public:
 	void Update(float dt) override;
 	void OnCollision(Actor* other) override;
 
+	float GetSpeed() const { return m_speed; }
+
+	void Read(const nu::json::value_t& value) override;
+
 private:
 	int m_ammo = 0;
 	float m_speed = 800.0f;
