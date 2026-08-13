@@ -14,6 +14,7 @@ bool SpaceGame::Initialize()
 
     m_scene = new Scene();
     m_scene->SetGame(this);
+    m_scene->Load("data/scene.json");
 
     m_titleText = new Text(Resources().GetWithID<Font>("title_font", "fonts/airstrike.ttf", 128.0f));
     m_titleText->Create(Engine::Get().GetRenderer(), "XENON", Color{ 1.0f, 1.0f, 1.0f });
@@ -127,16 +128,8 @@ void SpaceGame::OnPlayerDead()
 
 void SpaceGame::SpawnPlayer()
 {
-    PlayerDesc playerDesc;
-    playerDesc.name = "Player";
-    playerDesc.texture = Resources().Get<Texture>("textures/player.png", Engine::Get().GetRenderer());
-    playerDesc.transform = Transform{ Vector2{ 640.0f, 512.0f }, 0.0f, 1.0f };
-    playerDesc.velocity = Vector2{ 0.0f, 0.0f };
-    playerDesc.damping = 3.0f;
-    playerDesc.speed = 2000.0f;
-
-    std::unique_ptr<Player> player = std::make_unique<Player>(playerDesc);
-    m_scene->AddActor(std::move(player));
+    auto actor = Factory::Instance().Create<Actor>("PlayerPrototype");
+    m_scene->AddActor(std::move(actor));
 }
 
 void SpaceGame::SpawnEnemy()
@@ -144,28 +137,14 @@ void SpaceGame::SpawnEnemy()
     int enemyIndex = nu::RandomInt(2);
     if (enemyIndex == 0)
     {
-        EnemyDesc enemyDesc;
-        enemyDesc.name = "Enemy";
-        enemyDesc.texture = Resources().Get<Texture>("textures/enemy.png", Engine::Get().GetRenderer());
-        enemyDesc.transform = Transform{ Vector2{ nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeight())}, 90.0f, 1.0f };
-        enemyDesc.speed = RandomFloat(200.0f, 500.0f);
-        enemyDesc.damping = 3.0f;
-        enemyDesc.health = 2.0f;
-        enemyDesc.points = 100;
-
-        m_scene->AddActor(std::move(std::make_unique<Enemy>(enemyDesc)));
+        auto actor = Factory::Instance().Create<Actor>("EnemyPrototype");
+        actor->SetPosition({ nu::RandomFloat(1024.0f), nu::RandomFloat(800.0f) });
+        m_scene->AddActor(std::move(actor));
     }
     else if (enemyIndex == 1)
     {
-        EnemyDesc enemyDesc;
-        enemyDesc.name = "Enemy";
-        enemyDesc.texture = Resources().Get<Texture>("textures/enemy.png", Engine::Get().GetRenderer());
-        enemyDesc.transform = Transform{ Vector2{ nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetWidth()), nu::RandomFloat((float)nu::Engine::Get().GetRenderer().GetHeight())}, 90.0f, 1.0f };
-        enemyDesc.speed = RandomFloat(300.0f, 600.0f);
-        enemyDesc.damping = 3.0f;
-        enemyDesc.health = 5.0f;
-        enemyDesc.points = 500;
-
-        m_scene->AddActor(std::move(std::make_unique<Enemy>(enemyDesc)));
+        auto actor = Factory::Instance().Create<Actor>("EnemyPrototype");
+        actor->SetPosition({ nu::RandomFloat(1024.0f), nu::RandomFloat(800.0f) });
+        m_scene->AddActor(std::move(actor));
     }
 }

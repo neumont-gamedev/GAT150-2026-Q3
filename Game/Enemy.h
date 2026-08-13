@@ -19,9 +19,12 @@ public:
 		m_points{ enemyDesc.points }
 	{ }
 
+	CLASS_PROTOTYPE(Enemy)
+
 	void Update(float dt) override;
 	void OnCollision(Actor* other) override;
 
+	void Read(const nu::json::value_t& value) override;
 
 private:
 	int m_points = 100;

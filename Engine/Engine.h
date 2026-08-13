@@ -13,6 +13,7 @@
 #include "Texture.h"
 
 #include "Factory.h"
+#include "ResourceManager.h"
 
 // systems
 #include "Renderer.h"

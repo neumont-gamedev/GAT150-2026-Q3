@@ -85,7 +85,7 @@ void Player::Update(float dt)
 
 void Player::OnCollision(Actor* other)
 {
-	if (other->GetName() == "Enemy")
+	if (other->GetTag() == "Enemy")
 	{
 		SetDestroyed();
 		other->SetDestroyed();
