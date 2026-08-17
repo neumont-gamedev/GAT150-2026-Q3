@@ -8,12 +8,17 @@
 			"active": true,
 			"speed": 2000.0,
 			"damping": 3,
-			"texture": "textures/player.png",
 			"transform": {
 				"position": [ 640, 512 ],
 				"rotation": -90,
 				"scale": 1
-			}
+			},
+			"components": [
+				{
+					"type": "SpriteRendererComponent",
+					"texture": "textures/player.png"
+				}
+			]
 		},
 		{
 			"type": "Enemy",

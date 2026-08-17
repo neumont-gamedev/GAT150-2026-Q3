@@ -4,9 +4,12 @@
 #include "MathUtils.h"
 #include "Texture.h"
 #include "Engine.h"
+#include "Components/RendererComponent.h"
 
 namespace nu
 {
+    FACTORY_REGISTER(Actor)
+
     void Actor::Update(float dt)
     {
         // lifespan
@@ -14,6 +17,11 @@ namespace nu
         {
             m_lifespan -= dt;
             m_destroyed = (m_lifespan <= 0.0f);
+        }
+
+        for (auto component : m_components)
+        {
+            component->Update(dt);
         }
 
         // physics
@@ -26,31 +34,20 @@ namespace nu
 
     void Actor::Draw(const Renderer& renderer) const
     {
-        if (m_model)
+        for (auto component : m_components)
         {
-            renderer.DrawModel(*m_model, m_transform);
-        }
-        if (m_texture)
-        {
-            renderer.DrawTexture(*m_texture,
-                m_transform.position.x,
-                m_transform.position.y,
-                m_transform.rotation,
-                m_transform.scale);
+            // check if component is a renderer component
+            auto rendererComponent = dynamic_cast<RendererComponent*>(component);
+            if (rendererComponent)
+            {
+                // draw renderer component
+                rendererComponent->Draw(renderer);
+            }
         }
     }
 
     float Actor::GetRadius() const
     {
-        if (m_model)
-        {
-            return m_model->GetRadius() * m_transform.scale * 0.7f;
-        }
-        if (m_texture)
-        {
-            return (m_texture->GetSize().Length() * 0.5f) * 0.5f;
-        }
-
         return 0.0f;
     }
 
@@ -63,16 +60,34 @@ namespace nu
             m_transform.Read(JSON_GET_NAME(value, "transform"));
         }
 
-        std::string textureName;
-        JSON_READ_NAME(value, "texture", textureName);
-        if (!textureName.empty())
-        {
-            m_texture = Resources().Get<Texture>(textureName, Engine::Get().GetRenderer());
-        }
-
         JSON_READ_NAME(value, "tag", m_tag);
         JSON_READ_NAME(value, "lifespan", m_lifespan);
         JSON_READ_NAME(value, "velocity", m_velocity);
         JSON_READ_NAME(value, "damping", m_damping);
+
+        // read actor components
+        if (JSON_HAS_NAME(value, "components"))
+        {
+            // iterate through actor components
+            for (auto& componentValue : JSON_GET_NAME(value, "components").GetArray())
+            {
+                // get component type
+                std::string typeName;
+                JSON_READ_NAME(componentValue, "type", typeName);
+
+                std::cout << "Loading component type: " << typeName << std::endl;
+
+                // create component of type
+                auto component = Factory::Instance().Create<Component>(typeName);
+
+                if (component)
+                {
+                    component->Read(componentValue);
+                    //m_components.push_back(component);
+                }
+            }
+        }
+
+
     }
 }

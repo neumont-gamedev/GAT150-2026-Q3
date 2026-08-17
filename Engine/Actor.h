@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+#include "Framework/Component.h"
 #include "Transform.h"
 #include "Model.h"
 #include "Resource.h"
@@ -32,9 +33,7 @@ namespace nu
             m_transform{ actorDesc.transform },
             m_velocity{ actorDesc.velocity },
             m_damping{ actorDesc.damping },
-            m_lifespan{ actorDesc.lifespan },
-            m_model{ actorDesc.model },
-            m_texture{ actorDesc.texture }
+            m_lifespan{ actorDesc.lifespan }
         { }
 
         CLASS_PROTOTYPE(Actor)
@@ -59,8 +58,7 @@ namespace nu
         Scene* GetScene() { return m_scene; }
 
         float GetRadius() const;
-        void SetModel(std::shared_ptr<Model> model) { m_model = model; }
-
+        
         void SetDestroyed(bool destroy = true) { m_destroyed = destroy; }
         bool GetDestroyed() const { return m_destroyed; }
 
@@ -77,9 +75,7 @@ namespace nu
         float m_lifespan{ 0 };
         bool m_destroyed{ false };
 
-        res_t<Model> m_model;
-        res_t<Texture> m_texture;
-
+        std::vector<Component*> m_components;
 
         Scene* m_scene{ nullptr };
     };

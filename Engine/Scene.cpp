@@ -29,8 +29,17 @@ namespace nu
 					std::string typeName;
 					JSON_READ_NAME(actorValue, "type", typeName);
 
+					std::cout << "Loading actor type: " << typeName << std::endl;
+
 					// create actor of type
 					auto actor = Factory::Instance().Create<Actor>(typeName);
+
+					// could not create actor (actor is null)
+					if (!actor)
+					{
+						std::cout << "Could not create actor type: " << typeName << std::endl;
+						continue;
+					}
 
 					// read actor json 
 					actor->Read(actorValue);

@@ -21,37 +21,11 @@ int main()
     // CAN'T TOUCH THIS!
     SetWorkingDirectory("assets");
 
-    Factory::Instance().Register<Actor>("Actor");
-    Factory::Instance().Register<Object>("Object");
-    Factory::Instance().Register<Player>("Player");
-    Factory::Instance().Register<Enemy>("Enemy");
-    Factory::Instance().Register<Bullet>("Bullet");
-
-    /*
-        
-    auto actor = Factory::Instance().Create<Actor>("Actor");
-    std::cout << actor->IsActive() << std::endl;
-
-    auto object = Factory::Instance().Create("Object");
-    std::cout << object->IsActive() << std::endl;
-
-    auto player = Factory::Instance().Create<Player>("Player");
-
-    json::document_t document;
-    if (json::Load("data/scene.json", document))
-    {
-        player->Read(document);
-
-        std::cout << player->GetName() << std::endl;
-        std::cout << player->GetTag() << std::endl;
-
-        std::cout << player->GetTransform().rotation << std::endl;
-        std::cout << player->GetSpeed() << std::endl;
-    }
-
-    return 0;
-    */
-
+    //Factory::Instance().Register<Actor>("Actor");
+    //Factory::Instance().Register<Player>("Player");
+    //Factory::Instance().Register<Enemy>("Enemy");
+    //Factory::Instance().Register<Bullet>("Bullet");
+ 
 
     // INITIALIZATION
     Engine::Get().Initialize();
