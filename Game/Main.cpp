@@ -16,16 +16,12 @@
 
 using namespace nu;
 
+
+
 int main()
 {
     // CAN'T TOUCH THIS!
     SetWorkingDirectory("assets");
-
-    //Factory::Instance().Register<Actor>("Actor");
-    //Factory::Instance().Register<Player>("Player");
-    //Factory::Instance().Register<Enemy>("Enemy");
-    //Factory::Instance().Register<Bullet>("Bullet");
- 
 
     // INITIALIZATION
     Engine::Get().Initialize();

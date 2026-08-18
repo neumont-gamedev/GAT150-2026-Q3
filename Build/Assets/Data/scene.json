@@ -17,6 +17,10 @@
 				{
 					"type": "SpriteRendererComponent",
 					"texture": "textures/player.png"
+				},
+				{
+					"type": "CircleColliderComponent",
+					"radius": 64
 				}
 			]
 		},
@@ -26,16 +30,25 @@
 			"name": "EnemyPrototype",
 			"tag": "Enemy",
 			"active": true,
-			"speed": 2000.0,
+			"speed": 200.0,
 			"points": 50,
-			"health": 100,
+			"health": 1,
 			"damping": 3,
-			"texture": "textures/enemy.png",
 			"transform": {
 				"position": [ 640, 512 ],
 				"rotation": -90,
 				"scale": 1
-			}
+			},
+			"components": [
+				{
+					"type": "SpriteRendererComponent",
+					"texture": "textures/enemy.png"
+				},
+				{
+					"type": "CircleColliderComponent",
+					"radius": 64
+				}
+			]
 		},
 		{
 			"type": "Bullet",
@@ -43,15 +56,24 @@
 			"name": "BulletPrototype",
 			"tag": "Bullet",
 			"active": true,
+			"lifespan": 1.0,
 			"speed": 2000.0,
 			"damping": 3,
-			"texture": "textures/bullet.png",
 			"transform": {
 				"position": [ 640, 512 ],
 				"rotation": -90,
 				"scale": 1
-			}
+			},
+			"components": [
+				{
+					"type": "SpriteRendererComponent",
+					"texture": "textures/bullet.png"
+				},
+				{
+					"type": "CircleColliderComponent",
+					"radius": 24
+				}
+			]
 		}
 	]
-		
 }

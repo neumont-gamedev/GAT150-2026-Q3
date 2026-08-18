@@ -49,26 +49,33 @@ void Player::Update(float dt)
 		m_fireTimer = 0.25f;
 		nu::Engine::Get().GetAudio().PlaySound("laser", true);
 
-		BulletDesc desc;
-		desc.name = "Bullet";
-		desc.tag = "PlayerBullet";
-		desc.texture = nu::Resources().Get<nu::Texture>("textures/bullet.png", nu::Engine::Get().GetRenderer());
-		desc.transform = m_transform;
-		desc.transform.scale = 1.0f;
-		desc.speed = 1000.0f;
-		desc.lifespan = 1.0f;
+		auto bullet = nu::Factory::Instance().Create<Bullet>("BulletPrototype");
+		bullet->SetTransform(m_transform);
+		bullet->SetScale(2.0f);
+		bullet->SetTag("PlayerBullet");
+
+		m_scene->AddActor(std::move(bullet));
 		
-		// create bullets
-		m_scene->AddActor(std::move(std::make_unique<Bullet>(desc)));
+		//BulletDesc desc;
+		//desc.name = "Bullet";
+		//desc.tag = "PlayerBullet";
+		//desc.texture = nu::Resources().Get<nu::Texture>("textures/bullet.png", nu::Engine::Get().GetRenderer());
+		//desc.transform = m_transform;
+		//desc.transform.scale = 1.0f;
+		//desc.speed = 1000.0f;
+		//desc.lifespan = 1.0f;
+		//
+		//// create bullets
+		//m_scene->AddActor(std::move(std::make_unique<Bullet>(desc)));
 
-		if (burst)
-		{
-			desc.transform.rotation += 10.0f;
-			m_scene->AddActor(std::move(std::make_unique<Bullet>(desc)));
+		//if (burst)
+		//{
+		//	desc.transform.rotation += 10.0f;
+		//	m_scene->AddActor(std::move(std::make_unique<Bullet>(desc)));
 
-			desc.transform.rotation -= 20.0f;
-			m_scene->AddActor(std::move(std::make_unique<Bullet>(desc)));
-		}
+		//	desc.transform.rotation -= 20.0f;
+		//	m_scene->AddActor(std::move(std::make_unique<Bullet>(desc)));
+		//}
 	}
 
 	// bullet time
