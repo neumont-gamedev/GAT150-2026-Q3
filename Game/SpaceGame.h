@@ -1,6 +1,6 @@
 #pragma once
 #include "Game.h"
-#include "Text.h"
+#include "TextRenderer.h"
 #include "ResourceManager.h"
 
 class SpaceGame : public nu::Game
@@ -45,9 +45,9 @@ private:
 
 	GameState m_gameState = GameState::Title;
 		
-	nu::Text* m_titleText{ nullptr };
-	nu::Text* m_gameOverText{ nullptr };
+	nu::TextRenderer* m_titleText{ nullptr };
+	nu::TextRenderer* m_gameOverText{ nullptr };
 
-	nu::Text* m_scoreText{ nullptr };
-	nu::Text* m_livesText{ nullptr };
+	nu::TextRenderer* m_scoreText{ nullptr };
+	nu::TextRenderer* m_livesText{ nullptr };
 };

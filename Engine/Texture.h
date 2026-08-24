@@ -11,6 +11,7 @@ namespace nu
 	{
 	public:
 		Texture() = default;
+		Texture(SDL_Texture* texture);
 		~Texture();
 
 		bool Load(const std::string& filename, class Renderer& renderer);

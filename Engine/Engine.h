@@ -9,7 +9,7 @@
 #include "Json.h"
 #include "StringUtils.h"
 
-#include "Text.h"
+#include "TextRenderer.h"
 #include "Texture.h"
 
 #include "Factory.h"
@@ -21,6 +21,7 @@
 #include "Audio.h"
 #include "GameTime.h"
 #include "ParticleSystem.h"
+#include "Physics/Physics.h"
 
 // framework
 #include "Actor.h"
@@ -44,6 +45,7 @@ namespace nu
 		Audio& GetAudio() { return m_audio; }
 		Time& GetTime() { return m_time; }
 		ParticleSystem& GetPS() { return m_particleSystem; }
+		Physics& GetPhysics() { return m_physics; }
 
 		Engine(const Engine&) = delete;
 		Engine& operator = (const Engine&) = delete;
@@ -56,6 +58,7 @@ namespace nu
 		Renderer m_renderer;
 		Audio m_audio;
 		ParticleSystem m_particleSystem;
+		Physics m_physics;
 
 		Time m_time;
 	};	

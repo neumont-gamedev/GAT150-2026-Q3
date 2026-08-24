@@ -15,7 +15,7 @@ namespace nu
 		bool Load(const std::string& name, float fontSize);
 
 	private:
-		friend class Text;
+		friend class TextRenderer;
 
 		TTF_Font* m_ttfFont{ nullptr };
 	};

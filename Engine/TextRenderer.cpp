@@ -1,7 +1,8 @@
 #include "pch.h"
-#include "Text.h"
+#include "TextRenderer.h"
 #include "Vector3.h"
 #include "Renderer.h"
+#include "Texture.h"
 
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
@@ -10,14 +11,7 @@
 
 namespace nu
 {
-	Text::~Text() {
-		if (m_texture != nullptr) 
-		{
-			SDL_DestroyTexture(m_texture);
-		}
-	}
-
-	bool Text::Create(Renderer& renderer, const std::string& text, const Color& color) 
+	bool TextRenderer::Create(const Renderer& renderer, const std::string& text, const Color& color) 
 	{
 		// create a surface using the font, text string and color
 		SDL_Color c{ (uint8_t)(color.r * 255), (uint8_t)(color.g * 255), (uint8_t)(color.b * 255), 255 };
@@ -29,8 +23,8 @@ namespace nu
 		}
 
 		// create a texture from the surface, only textures can render to the renderer
-		m_texture = SDL_CreateTextureFromSurface(renderer.m_renderer, surface);
-		if (m_texture == nullptr) 
+		SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer.m_renderer, surface);
+		if (texture == nullptr) 
 		{
 			SDL_DestroySurface(surface);
 			std::cerr << "Could not create texture" << SDL_GetError() << std::endl;
@@ -40,19 +34,13 @@ namespace nu
 		// free the surface, no longer needed after creating the texture
 		SDL_DestroySurface(surface);
 
+		m_texture = std::make_shared<Texture>(texture);
+
 		return true;
 	}
 
-	void Text::Draw(const Renderer& renderer, float x, float y) 
+	void TextRenderer::Draw(const Renderer& renderer, float x, float y) 
 	{
-		// get the texture width and height
-		float width, height;
-		bool success = SDL_GetTextureSize(m_texture, &width, &height);
-		assert(success);
-
-		// set the texture into the renderer at rect 
-		SDL_FRect rect{ x, y, width, height };
-		success = SDL_RenderTexture(renderer.m_renderer, m_texture, NULL, &rect);
-		assert(success);
+		renderer.DrawTexture(*m_texture, x, y);
 	}
 }

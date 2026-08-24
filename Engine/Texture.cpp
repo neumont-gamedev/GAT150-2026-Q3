@@ -7,6 +7,12 @@
 
 namespace nu
 {
+    Texture::Texture(SDL_Texture* texture) : m_texture{ texture }
+    {
+        // cache size
+        SDL_GetTextureSize(m_texture, &m_size.x, &m_size.y);
+    }
+
     Texture::~Texture()
     {
         // if texture exists, destroy texture

@@ -4,9 +4,9 @@
 #include "Model.h"
 #include "MathUtils.h"
 #include "Texture.h"
+#include "Input.h"
 
 #include <iostream>
-#include "Input.h"
 
 namespace nu
 {
