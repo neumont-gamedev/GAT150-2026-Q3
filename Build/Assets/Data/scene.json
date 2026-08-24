@@ -7,16 +7,14 @@
 			"tag": "Enemy",
 			"active": true,
 			"transform": {
-				"position": [ 240, 200 ],
+				"position": [ 200, 200 ],
 				"rotation": 0,
 				"scale": 3
 			},
 			"components": [
 				{
-					"type": "SpriteAnimationRendererComponent",
-					"texture_animation": "animations/bat_idle.json",
-					"loop": true,
-					"frames_per_second": 2
+					"type": "SpriteRendererComponent",
+					"texture": "textures/bat.png"
 				}
 			]
 		},
