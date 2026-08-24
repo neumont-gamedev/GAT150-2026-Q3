@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "Actor.h"
-#include "Renderer.h"
+#include "Framework/Actor.h"
+#include "Renderer/Renderer.h"
+#include "Renderer/Texture.h"
 #include "Math/MathUtils.h"
-#include "Texture.h"
 #include "Engine.h"
 #include "Components/RendererComponent.h"
 

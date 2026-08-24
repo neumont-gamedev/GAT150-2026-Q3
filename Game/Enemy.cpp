@@ -1,6 +1,5 @@
 #include "Enemy.h"
 #include "Player.h"
-#include "Renderer.h"
 #include "Engine.h"
 #include "SpaceGame.h"
 

@@ -1,7 +1,7 @@
 #pragma once
-#include "Game.h"
-#include "TextRenderer.h"
-#include "ResourceManager.h"
+#include "Framework/Game.h"
+#include "Renderer/TextRenderer.h"
+#include "Resources/ResourceManager.h"
 
 class SpaceGame : public nu::Game
 {

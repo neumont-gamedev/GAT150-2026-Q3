@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "TextRendererComponent.h"
-#include "Actor.h"
-#include "Renderer.h"
-#include "TextRenderer.h"
-#include "Factory.h"
-#include "ResourceManager.h"
+#include "Framework/Actor.h"
+#include "Renderer/Renderer.h"
+#include "Renderer/TextRenderer.h"
+#include "Core/Factory.h"
+#include "Resources/ResourceManager.h"
 
 namespace nu
 {

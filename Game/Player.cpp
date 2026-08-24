@@ -1,8 +1,8 @@
 #include "Player.h"
 #include "Bullet.h"
-#include "Assets.h"
-#include "Renderer.h"
 #include "Engine.h"
+#include "Renderer/Renderer.h"
+
 #include "SpaceGame.h"
 
 FACTORY_REGISTER(Player)

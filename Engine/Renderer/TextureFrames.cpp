@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "TextureFrames.h"
-#include "Json.h"
+#include "Serialization/Json.h"
 #include "Texture.h"
 
 namespace nu
@@ -41,7 +41,7 @@ namespace nu
 		}
 
 		Vector2 textureSize = m_texture->GetSize();
-		m_frameSize = textureSize / Vector2{ m_numColumns, m_numRows };
+		m_frameSize = textureSize / Vector2{ (float)m_numColumns, (float)m_numRows };
 
 		return true;
 	}

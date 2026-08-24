@@ -2,8 +2,9 @@
 #include "Object.h"
 #include "Components/Component.h"
 #include "Math/Transform.h"
-#include "Model.h"
-#include "Resource.h"
+#include "Renderer/Model.h"
+#include "Resources/Resource.h"
+
 #include <string>
 #include <memory>
 

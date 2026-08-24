@@ -1,22 +1,7 @@
 #include "Engine.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "Assets.h"
 #include "SpaceGame.h"
-#include "Bullet.h"
-
-#include <fmod.hpp>
-
-#include <iostream>
-#include <vector>
-#include <map>
-#include <memory>
-#include <random>
-#include <fstream>
 
 using namespace nu;
-
-
 
 int main()
 {
