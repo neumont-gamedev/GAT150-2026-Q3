@@ -30,7 +30,7 @@ namespace nu
 		}
 
 		JSON_READ_NAME(document, "columns", m_numColumns);
-		JSON_READ_NAME(document, "row", m_numRows);
+		JSON_READ_NAME(document, "rows", m_numRows);
 		JSON_READ_NAME(document, "start_frame", m_startFrame);
 		JSON_READ_NAME(document, "total_frames", m_totalFrames);
 
@@ -41,13 +41,13 @@ namespace nu
 		}
 
 		Vector2 textureSize = m_texture->GetSize();
-		m_frameSize = textureSize / Vector2{ (float)m_numColumns, (float)m_numRows };
+		m_frameSize = textureSize / Vector2{ m_numColumns, m_numRows };
 
 		return true;
 	}
 	Rect TextureFrames::GetFrameRect(unsigned int frame)
 	{
-		if (frame < 0 || frame >= m_totalFrames)
+		if (frame >= m_totalFrames)
 		{
 			std::cerr << "Texture Frames frame " << frame << "is out of bounds.\n";
 			frame = 0;

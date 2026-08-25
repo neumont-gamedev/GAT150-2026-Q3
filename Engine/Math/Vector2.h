@@ -11,6 +11,8 @@ namespace nu
 		Vector2() = default;
 		Vector2(float x, float y) : x{ x }, y{ y } {}
 		Vector2(int x, int y) : x{ (float)x }, y{ (float)y } {}
+		Vector2(unsigned int x, unsigned int y) : x{ (float)x }, y{ (float)y } {}
+
 		explicit Vector2(float v) : x{ v }, y{ v } {}
 
 		float  operator [] (unsigned int i) const { assert(i < 2); return (&x)[i]; }
