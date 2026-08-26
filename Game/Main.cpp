@@ -5,6 +5,8 @@ using namespace nu;
 
 int main()
 {
+
+
     // CAN'T TOUCH THIS!
     SetWorkingDirectory("assets");
 

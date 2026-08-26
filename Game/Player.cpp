@@ -2,6 +2,7 @@
 #include "Bullet.h"
 #include "Engine.h"
 #include "Renderer/Renderer.h"
+#include "Components/PhysicsComponent.h"
 
 #include "SpaceGame.h"
 
@@ -16,14 +17,23 @@ void Player::Update(float dt)
 
 
 	float rotate = 0.0f;
-	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_A)) rotate = -180.0f;
-	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_D)) rotate = +180.0f;
+	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_A)) rotate = -40.0f;
+	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_D)) rotate = +40.0f;
 
-	SetRotation(m_transform.rotation + rotate * dt);
+	nu::PhysicsComponent* physicsComponent = GetComponent<nu::PhysicsComponent>();
+	if (physicsComponent)
+	{
+		nu::Vector2 forward{ 1, 0 }; // ->
+		nu::Vector2 force = forward.Rotate(m_transform.rotation * nu::DegToRad) * thrust;
 
-	nu::Vector2 forward{ 1, 0 }; // ->
-	nu::Vector2 velocity = forward.Rotate(m_transform.rotation * nu::DegToRad) * thrust;
-	AddVelocity(velocity * dt);
+		physicsComponent->ApplyForce(force);
+		physicsComponent->ApplyTorque(rotate);
+
+		nu::Vector2 position = physicsComponent->GetPosition();
+		position.x = nu::Wrap(0.0f, 1280.0f, position.x);
+		position.y = nu::Wrap(0.0f, 1024.0f, position.y);
+		physicsComponent->SetPosition(position);
+	}
 
 	// particle system
 	if (thrust)
@@ -55,27 +65,6 @@ void Player::Update(float dt)
 		bullet->SetTag("PlayerBullet");
 
 		m_scene->AddActor(std::move(bullet));
-		
-		//BulletDesc desc;
-		//desc.name = "Bullet";
-		//desc.tag = "PlayerBullet";
-		//desc.texture = nu::Resources().Get<nu::Texture>("textures/bullet.png", nu::Engine::Get().GetRenderer());
-		//desc.transform = m_transform;
-		//desc.transform.scale = 1.0f;
-		//desc.speed = 1000.0f;
-		//desc.lifespan = 1.0f;
-		//
-		//// create bullets
-		//m_scene->AddActor(std::move(std::make_unique<Bullet>(desc)));
-
-		//if (burst)
-		//{
-		//	desc.transform.rotation += 10.0f;
-		//	m_scene->AddActor(std::move(std::make_unique<Bullet>(desc)));
-
-		//	desc.transform.rotation -= 20.0f;
-		//	m_scene->AddActor(std::move(std::make_unique<Bullet>(desc)));
-		//}
 	}
 
 	// bullet time
@@ -94,6 +83,8 @@ void Player::Update(float dt)
 
 void Player::OnCollision(Actor* other)
 {
+	return; // DON'T DIE!!!
+
 	if (other->GetTag() == "Enemy")
 	{
 		SetDestroyed();

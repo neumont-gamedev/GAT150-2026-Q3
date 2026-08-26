@@ -6,6 +6,43 @@
 
 namespace nu
 {
+	void Scene::Update(float dt)
+	{
+		// update actors
+		for (auto& actor : m_actors)
+		{
+			actor->Update(dt);
+		}
+
+		// update collisions
+		UpdateCollisions();
+
+		// remove destroyed actors
+		for (auto& actor : m_actors)
+		{
+			if (actor->m_destroyed) actor->OnDestroy();
+		}
+		std::erase_if(m_actors, [](auto& actor) { return actor->m_destroyed; });
+
+		// add pending actors
+		for (auto& actor : m_pendingActors)
+		{
+			actor->Start();
+			m_actors.push_back(std::move(actor));
+		}
+		m_pendingActors.clear();
+	}
+
+	void Scene::Draw(const class Renderer& renderer)
+	{
+		for (const auto& actor : m_actors)
+		{
+			if (actor)
+				actor->Draw(renderer);
+		}
+	}
+
+
 	void Scene::AddActor(std::unique_ptr<Actor> actor)
 	{ 
 		actor->m_scene = this;
@@ -73,36 +110,6 @@ namespace nu
 		return true;
 	}
 
-	void Scene::Update(float dt)
-	{
-		// update actors
-		for (auto& actor : m_actors)
-		{
-			actor->Update(dt);
-		}
-
-		// update collisions
-		UpdateCollisions();
-
-		// remove destroyed actors
-		std::erase_if(m_actors, [](auto& actor) { return actor->m_destroyed; });
-
-		// add pending actors
-		for (auto& actor : m_pendingActors)
-		{
-			m_actors.push_back(std::move(actor));
-		}
-		m_pendingActors.clear();
-	}
-
-	void Scene::Draw(const class Renderer& renderer)
-	{
-		for (const auto& actor : m_actors)
-		{
-			if (actor)
-				actor->Draw(renderer);
-		}
-	}
 
 	void Scene::UpdateCollisions()
 	{
