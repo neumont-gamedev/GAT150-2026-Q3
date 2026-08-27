@@ -15,7 +15,7 @@ namespace nu
 		}
 
 		// update collisions
-		UpdateCollisions();
+		//UpdateCollisions();
 
 		// remove destroyed actors
 		for (auto& actor : m_actors)
@@ -42,22 +42,21 @@ namespace nu
 		}
 	}
 
-
 	void Scene::AddActor(std::unique_ptr<Actor> actor)
 	{ 
 		actor->m_scene = this;
 		m_pendingActors.push_back(std::move(actor));
 	}
 
-	void Scene::RemoveAllActors()
+	void Scene::RemoveAllActors(bool force)
 	{
-		m_actors.clear();
+		std::erase_if(m_actors, [force](auto& actor) { return !actor->GetPersistent() || force; });
 	}
 
 	bool Scene::Load(const std::string& sceneName)
 	{
 		json::document_t document;
-		if (json::Load("data/scene.json", document))
+		if (json::Load(sceneName, document))
 		{
 			if (JSON_HAS_NAME(document, "actors"))
 			{

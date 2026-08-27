@@ -90,6 +90,7 @@ namespace nu
 
         JSON_READ_NAME(value, "tag", m_tag);
         JSON_READ_NAME(value, "lifespan", m_lifespan);
+        JSON_READ_NAME(value, "persistent", m_persistent);
 
         // read actor components
         if (JSON_HAS_NAME(value, "components"))

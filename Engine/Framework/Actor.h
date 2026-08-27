@@ -66,6 +66,8 @@ namespace nu
         void SetDestroyed(bool destroy = true) { m_destroyed = destroy; }
         bool GetDestroyed() const { return m_destroyed; }
 
+        bool GetPersistent() const { return m_persistent; }
+
         virtual void Read(const json::value_t& value) override;
 
         void AddComponent(std::unique_ptr<Component> component);
@@ -82,6 +84,7 @@ namespace nu
         Transform m_transform;
         float m_lifespan{ 0 };
         bool m_destroyed{ false };
+        bool m_persistent{ false };
 
         std::vector<std::unique_ptr<Component>> m_components;
 

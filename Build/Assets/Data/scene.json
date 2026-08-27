@@ -3,9 +3,29 @@
 		{
 			"type": "Actor",
 			"prototype": false,
+			"name": "Tilemap",
+			"tag": "Ground",
+			"active": true,
+			"persistent": true,
+			"transform": {
+				"position": [ 0, 0 ],
+				"rotation": 0,
+				"scale": 3
+			},
+			"components": [
+				{
+					"type": "TilemapRendererComponent",
+					"tilemap_name": "tilemaps/world.json"
+				}
+			]
+		},
+		{
+			"type": "Actor",
+			"prototype": false,
 			"name": "Bat",
 			"tag": "Enemy",
 			"active": true,
+			"persistent": true,
 			"transform": {
 				"position": [ 200, 200 ],
 				"rotation": 0,
@@ -43,10 +63,6 @@
 					"angular_damping": 2.0,
 					"size": [ 48, 48 ],
 					"gravity_scale": 0
-				},
-				{
-					"type": "CircleColliderComponent",
-					"radius": 64
 				}
 			]
 		},
@@ -75,10 +91,6 @@
 					"angular_damping": 2.0,
 					"size": [ 48, 48 ],
 					"gravity_scale": 0
-				},
-				{
-					"type": "CircleColliderComponent",
-					"radius": 64
 				}
 			]
 		},
@@ -106,11 +118,8 @@
 					"linear_damping": 2.0,
 					"angular_damping": 2.0,
 					"size": [ 48, 48 ],
-					"gravity_scale": 0
-				},
-				{
-					"type": "CircleColliderComponent",
-					"radius": 24
+					"gravity_scale": 0,
+					"is_sensor": true
 				}
 			]
 		}
