@@ -1,18 +1,19 @@
 #include "Engine.h"
-#include "SpaceGame.h"
+#include "Core/File.h"
+#include "SpaceGame/SpaceGame.h"
+#include "SpriteGame/SpriteGame.h"
 
 using namespace nu;
 
 int main()
 {
-    // CAN'T TOUCH THIS!
-    SetWorkingDirectory("assets");
+    SetWorkingDirectory("Assets");
 
     // INITIALIZATION
-    Engine::Get().Initialize();
+    Engine::Instance().Initialize();
 
-    SpaceGame game;
-    game.Initialize();
+    std::unique_ptr<Game> game = std::make_unique<SpriteGame>();
+    game->Initialize();
 
     // MAIN LOOP
     bool quit = false;
@@ -33,24 +34,27 @@ int main()
         }
 
         // ENGINE
-        Engine::Get().Update();
-        float dt = Engine::Get().GetTime().GetDeltaTime();
+        Engine::Instance().Update();
+        float dt = Engine::Instance().GetTime().GetDeltaTime();
 
         // GAME
-        game.Update(dt);
+        game->Update(dt);
 
         // RENDER
-        Engine::Get().GetRenderer().SetColor(0.0f, 0.0f, 0.0f);
-        Engine::Get().GetRenderer().Clear();
+        Engine::Instance().GetRenderer().SetColor(0.0f, 0.0f, 0.0f);
+        Engine::Instance().GetRenderer().Clear();
 
-        game.Draw(Engine::Get().GetRenderer());
-        Engine::Get().GetPS().Draw(Engine::Get().GetRenderer());
+        game->Draw(Engine::Instance().GetRenderer());
+        Engine::Instance().GetPS().Draw(Engine::Instance().GetRenderer());
 
-        Engine::Get().GetRenderer().Present();
+        Engine::Instance().GetRenderer().Present();
     }
 
+    // reset destroys the object (need to delete game before engine shutdown)
+    game.reset();
+
     // SHUTDOWN
-    Engine::Get().Shutdown();    
+    Engine::Instance().Shutdown();    
 
     return 0;
 }

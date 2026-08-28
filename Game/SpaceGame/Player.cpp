@@ -2,7 +2,11 @@
 #include "Bullet.h"
 #include "Engine.h"
 #include "Renderer/Renderer.h"
+#include "Core/Factory.h"
+#include "Core/Random.h"
+#include "Math/MathUtils.h"
 #include "Components/PhysicsComponent.h"
+#include "Framework/Scene.h"
 
 #include "SpaceGame.h"
 
@@ -12,13 +16,13 @@ void Player::Update(float dt)
 {
 	// movement
 	float thrust = 0.0f;
-	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_W)) thrust =  m_speed;
-	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_S)) thrust = -m_speed;
+	if (nu::Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_W)) thrust =  m_speed;
+	if (nu::Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_S)) thrust = -m_speed;
 
 
 	float rotate = 0.0f;
-	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_A)) rotate = -40.0f;
-	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_D)) rotate = +40.0f;
+	if (nu::Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_A)) rotate = -40.0f;
+	if (nu::Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_D)) rotate = +40.0f;
 
 	nu::PhysicsComponent* physicsComponent = GetComponent<nu::PhysicsComponent>();
 	if (physicsComponent)
@@ -43,21 +47,21 @@ void Player::Update(float dt)
 		offset = offset.Rotate(m_transform.rotation * nu::DegToRad);
 		particle.position = m_transform.position + offset;
 
-		particle.texture = nu::Resources().Get<nu::Texture>("textures/particle.png", nu::Engine::Get().GetRenderer());
+		particle.texture = nu::Resources().Get<nu::Texture>("textures/particle.png", nu::Engine::Instance().GetRenderer());
 		particle.lifespan = nu::RandomFloat(0.5f, 1.5f);
 		particle.velocity = nu::Vector2{ nu::RandomFloat(-100.0f, -30.0f), 0.0f}.Rotate((m_transform.rotation + nu::RandomInt(-30, 30)) * nu::DegToRad);
 
-		nu::Engine::Get().GetPS().AddParticle(particle);
+		nu::Engine::Instance().GetPS().AddParticle(particle);
 	}
 
 	// fire
 	m_fireTimer -= dt;
-	if (m_fireTimer <= 0.0f && nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_SPACE))
+	if (m_fireTimer <= 0.0f && nu::Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_SPACE))
 	{
 		bool burst = (m_fireTimer <= -1.0f);
 
 		m_fireTimer = 0.25f;
-		nu::Engine::Get().GetAudio().PlaySound("laser", true);
+		nu::Engine::Instance().GetAudio().PlaySound("laser", true);
 
 		auto bullet = nu::Factory::Instance().Create<Bullet>("BulletPrototype");
 		bullet->SetTransform(m_transform);
@@ -68,13 +72,13 @@ void Player::Update(float dt)
 	}
 
 	// bullet time
-	if (nu::Engine::Get().GetInput().GetKeyDown(SDL_SCANCODE_X))
+	if (nu::Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_X))
 	{
-		nu::Engine::Get().GetTime().SetTimeScale(0.5f);
+		nu::Engine::Instance().GetTime().SetTimeScale(0.5f);
 	}
 	else
 	{
-		nu::Engine::Get().GetTime().SetTimeScale(1.0f);
+		nu::Engine::Instance().GetTime().SetTimeScale(1.0f);
 	}
 
 
@@ -90,7 +94,7 @@ void Player::OnCollision(Actor* other)
 		SetDestroyed();
 		other->SetDestroyed();
 
-		nu::Engine::Get().GetAudio().PlaySound("explosion");
+		nu::Engine::Instance().GetAudio().PlaySound("explosion");
 		((SpaceGame*)m_scene->GetGame())->OnPlayerDead();
 	}
 }

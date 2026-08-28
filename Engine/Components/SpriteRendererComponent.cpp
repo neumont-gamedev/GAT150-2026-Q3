@@ -3,6 +3,7 @@
 #include "Renderer/Renderer.h"
 #include "Framework/Actor.h"
 #include "Resources/ResourceManager.h"
+#include "Core/Factory.h"
 #include "Engine.h"
 
 namespace nu
@@ -29,7 +30,7 @@ namespace nu
 		JSON_READ_NAME(value, "texture", textureName);
 		if (!textureName.empty())
 		{
-			m_texture = Resources().Get<Texture>(textureName, Engine::Get().GetRenderer());
+			m_texture = Resources().Get<Texture>(textureName, Engine::Instance().GetRenderer());
 		}
 	}
 }

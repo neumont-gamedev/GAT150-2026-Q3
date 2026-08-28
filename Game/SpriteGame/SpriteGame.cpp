@@ -1,40 +1,45 @@
-#include "SpaceGame.h"
+#include "SpriteGame.h"
+#include "Core/File.h"
+#include "Core/Factory.h"
+#include "Core/Random.h"
+#include "Framework/Scene.h"
+
 #include "Engine.h"
-#include "Player.h"
-#include "Enemy.h"
 
 #include <memory>
 
 using namespace nu;
 
-bool SpaceGame::Initialize()
+bool SpriteGame::Initialize()
 {
+    SetWorkingDirectory("SpriteGame");
+
     Game::Initialize();
 
-    m_scene = new Scene();
+    m_scene = std::make_unique<Scene>();
     m_scene->SetGame(this);
     m_scene->Load("data/scene.json");
 
     m_titleText = new TextRenderer(Resources().GetWithID<Font>("title_font", "fonts/airstrike.ttf", 128.0f));
-    m_titleText->Create(Engine::Get().GetRenderer(), "XENON", Color{ 1.0f, 1.0f, 1.0f });
+    m_titleText->Create(Engine::Instance().GetRenderer(), "XENON", Color{ 1.0f, 1.0f, 1.0f });
 
     m_scoreText = new TextRenderer(Resources().GetWithID<Font>("game_font", "fonts/airstrike.ttf", 32.0f));
     m_livesText = new TextRenderer(Resources().GetWithID<Font>("game_font", "fonts/airstrike.ttf", 32.0f));
 
-    Engine::Get().GetAudio().AddSound("laser", "audio/laser.wav");
-    Engine::Get().GetAudio().AddSound("explosion", "audio/explosion.wav");
-    Engine::Get().GetAudio().AddSound("music", "audio/music.wav");
-    Engine::Get().GetAudio().PlaySound("music", true);
+    Engine::Instance().GetAudio().AddSound("laser", "audio/laser.wav");
+    Engine::Instance().GetAudio().AddSound("explosion", "audio/explosion.wav");
+    Engine::Instance().GetAudio().AddSound("music", "audio/music.wav");
+    Engine::Instance().GetAudio().PlaySound("music", true);
 
     return true;
 }
 
-void SpaceGame::Update(float dt)
+void SpriteGame::Update(float dt)
 {
     switch (m_gameState)
     {
     case GameState::Title:
-        if (Engine::Get().GetInput().GetKeyPressed(SDL_SCANCODE_SPACE))
+        if (Engine::Instance().GetInput().GetKeyPressed(SDL_SCANCODE_SPACE))
         {
             m_gameState = GameState::StartGame;
         }
@@ -86,9 +91,9 @@ void SpaceGame::Update(float dt)
     Game::Update(dt);
 }
 
-void SpaceGame::Draw(nu::Renderer& renderer)
+void SpriteGame::Draw(nu::Renderer& renderer)
 {
-    renderer.DrawTexture(*nu::Resources().Get<Texture>("textures/background.jpg", Engine::Get().GetRenderer()), Engine::Get().GetRenderer().GetWidth() * 0.5f, Engine::Get().GetRenderer().GetHeight() * 0.5f);
+    renderer.DrawTexture(*nu::Resources().Get<Texture>("textures/background.jpg", Engine::Instance().GetRenderer()), Engine::Instance().GetRenderer().GetWidth() * 0.5f, Engine::Instance().GetRenderer().GetHeight() * 0.5f);
 
     switch (m_gameState)
     {
@@ -117,7 +122,7 @@ void SpaceGame::Draw(nu::Renderer& renderer)
     Game::Draw(renderer);
 }
 
-void SpaceGame::OnPlayerDead()
+void SpriteGame::OnPlayerDead()
 {
     m_lives--;
     m_gameState = (m_lives == 0) ? GameState::GameOver : GameState::StartLevel;
@@ -125,13 +130,13 @@ void SpaceGame::OnPlayerDead()
     m_stateTimer = 2.0f;
 }
 
-void SpaceGame::SpawnPlayer()
+void SpriteGame::SpawnPlayer()
 {
     auto actor = Factory::Instance().Create<Actor>("PlayerPrototype");
     m_scene->AddActor(std::move(actor));
 }
 
-void SpaceGame::SpawnEnemy()
+void SpriteGame::SpawnEnemy()
 {
     int enemyIndex = nu::RandomInt(2);
     if (enemyIndex == 0)

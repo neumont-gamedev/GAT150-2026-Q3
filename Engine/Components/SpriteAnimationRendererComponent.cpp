@@ -4,6 +4,9 @@
 #include "Resources/ResourceManager.h"
 #include "Renderer/TextureFrames.h"
 #include "Math/MathUtils.h"
+#include "Math/Transform.h"
+#include "Framework/Actor.h"
+
 #include "Engine.h"
 
 namespace nu
@@ -64,7 +67,7 @@ namespace nu
 
 		if (!texture_frames.empty())
 		{
-			m_textureFrames = Resources().Get<TextureFrames>(texture_frames, Engine::Get().GetRenderer());
+			m_textureFrames = Resources().Get<TextureFrames>(texture_frames, Engine::Instance().GetRenderer());
 			if (!m_textureFrames)
 			{
 				std::cerr << "Could not load texture frames: " << texture_frames << std::endl;

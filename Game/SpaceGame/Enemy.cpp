@@ -2,6 +2,10 @@
 #include "Player.h"
 #include "Engine.h"
 #include "SpaceGame.h"
+#include "Core/Factory.h"
+#include "Framework/Scene.h"
+#include "Math/MathUtils.h"
+#include "Core/Random.h"
 #include "Components/PhysicsComponent.h"
 
 #include <iostream>
@@ -32,11 +36,11 @@ void Enemy::Update(float dt)
 	offset = offset.Rotate(m_transform.rotation * nu::DegToRad);
 	particle.position = m_transform.position + offset;
 
-	particle.texture = nu::Resources().Get<nu::Texture>("textures/particle.png", nu::Engine::Get().GetRenderer());
+	particle.texture = nu::Resources().Get<nu::Texture>("textures/particle.png", nu::Engine::Instance().GetRenderer());
 	particle.lifespan = nu::RandomFloat(0.15f, 0.5f);
 	particle.velocity = nu::Vector2{ nu::RandomFloat(-100.0f, -30.0f), 0.0f }.Rotate((m_transform.rotation + nu::RandomInt(-30, 30)) * nu::DegToRad);
 
-	nu::Engine::Get().GetPS().AddParticle(particle);
+	nu::Engine::Instance().GetPS().AddParticle(particle);
 
 
 	Actor::Update(dt);
@@ -55,17 +59,17 @@ void Enemy::OnCollision(Actor* other)
 
 			((SpaceGame*)m_scene->GetGame())->AddPoints(m_points);
 
-			nu::Engine::Get().GetAudio().PlaySound("explosion");
+			nu::Engine::Instance().GetAudio().PlaySound("explosion");
 			// create particle explosion
 			for (int i = 0; i < 100; i++)
 			{
 				nu::Particle particle;
 				particle.position = m_transform.position;
-				particle.texture = nu::Resources().Get<nu::Texture>("textures/particle.png", nu::Engine::Get().GetRenderer());
+				particle.texture = nu::Resources().Get<nu::Texture>("textures/particle.png", nu::Engine::Instance().GetRenderer());
 				particle.lifespan = nu::RandomFloat(0.15f, 0.75f);
 				particle.velocity = { nu::RandomFloat(-600.0f, 600.0f), nu::RandomFloat(-600.0f, 600.0f) };
 
-				nu::Engine::Get().GetPS().AddParticle(particle);
+				nu::Engine::Instance().GetPS().AddParticle(particle);
 			}
 		}
 	}

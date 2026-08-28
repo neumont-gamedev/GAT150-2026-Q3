@@ -19,7 +19,7 @@ namespace nu
 	void Box2DPhysicsComponent::Start()
 	{
 		m_bodyDef.actor = GetOwner();
-		m_physicsBody = std::make_unique<PhysicsBody>(GetOwner()->GetTransform(), m_size, m_bodyDef, Engine::Get().GetPhysics());
+		m_physicsBody = std::make_unique<PhysicsBody>(GetOwner()->GetTransform(), m_size, m_bodyDef, Engine::Instance().GetPhysics());
 	}
 
 	void Box2DPhysicsComponent::Update(float dt)

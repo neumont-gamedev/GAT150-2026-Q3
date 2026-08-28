@@ -5,6 +5,7 @@
 #include "Math/MathUtils.h"
 #include "Engine.h"
 #include "Components/RendererComponent.h"
+#include "Core/Factory.h"
 
 namespace nu
 {

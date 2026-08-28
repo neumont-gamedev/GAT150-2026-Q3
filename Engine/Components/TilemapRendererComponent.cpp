@@ -3,6 +3,7 @@
 #include "Renderer/Tilemap.h"
 #include "Core/Factory.h"
 #include "Physics/PhysicsBody.h"
+#include "Framework/Actor.h"
 #include "Engine.h"
 
 namespace nu
@@ -18,7 +19,7 @@ namespace nu
 	void TilemapRendererComponent::Start()
 	{
 		// load the tilemap resource
-		m_tilemap = Resources().Get<Tilemap>(m_tilemapName, Engine::Get().GetRenderer());
+		m_tilemap = Resources().Get<Tilemap>(m_tilemapName, Engine::Instance().GetRenderer());
 		if (!m_tilemap)
 		{
 			std::cerr << "Could not load tilename " << m_tilemapName << std::endl;
@@ -54,7 +55,7 @@ namespace nu
 				Vector2 size{ sourceRect.w, sourceRect.h };
 
 				// create physics body and add to physics bodies container
-				auto physicsBody = std::make_unique<PhysicsBody>(transform, size, bodyDef, Engine::Get().GetPhysics());
+				auto physicsBody = std::make_unique<PhysicsBody>(transform, size, bodyDef, Engine::Instance().GetPhysics());
 				m_physicsBodies.push_back(std::move(physicsBody));
 			}
 		}
