@@ -18,7 +18,7 @@ bool SpriteGame::Initialize()
 
     m_scene = std::make_unique<Scene>();
     m_scene->SetGame(this);
-    m_scene->Load("data/scene.json");
+    m_scene->Load("scenes/scene.json");
 
     m_titleText = new TextRenderer(Resources().GetWithID<Font>("title_font", "fonts/airstrike.ttf", 128.0f));
     m_titleText->Create(Engine::Instance().GetRenderer(), "XENON", Color{ 1.0f, 1.0f, 1.0f });

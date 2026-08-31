@@ -10,7 +10,7 @@
 			"transform": {
 				"position": [ 0, 0 ],
 				"rotation": 0,
-				"scale": 3
+				"scale": 5
 			},
 			"components": [
 				{
@@ -33,10 +33,29 @@
 			},
 			"components": [
 				{
-					"type": "SpriteAnimationRendererComponent",
-					"texture_frames": "animations/bat_idle.json",
-					"frames_per_second": 10,
-					"loop": true
+					"type": "SpriteAnimatorRendererComponent",
+					"default_animation": "idle",
+					"animations": [
+						{
+							"name": "run",
+							"texture_frames": "animations/goblin_run.json",
+							"frames_per_second": 10,
+							"loop": true
+						},
+						{
+							"name": "idle",
+							"texture_frames": "animations/goblin_idle.json",
+							"frames_per_second": 10,
+							"loop": true
+						}
+					]
+				},
+				{
+					"type": "Box2DPhysicsComponent",
+					"linear_damping": 2.0,
+					"angular_damping": 2.0,
+					"size": [ 48, 48 ],
+					"gravity_scale": 1
 				}
 			]
 		},

@@ -29,12 +29,16 @@ namespace nu
 		int GetWidth() const { return m_width; }
 		int GetHeight() const { return m_height; }
 
+		void SetCamera(const Vector2 camera) { m_camera = camera; }
+
 		friend class TextRenderer;
 		friend class Texture;
 
 	private:
 		SDL_Window* m_window = nullptr;
 		SDL_Renderer* m_renderer = nullptr;
+
+		Vector2 m_camera;
 
 		int m_width = 0;
 		int m_height = 0;
