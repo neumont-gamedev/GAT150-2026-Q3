@@ -56,6 +56,8 @@ void SpriteGame::Update(float dt)
         if (m_stateTimer <= 0)
         {
             m_scene->RemoveAllActors();
+            m_scene->Load("scenes/level.json");
+
             SpawnPlayer();
             m_spawnTime = 5.0f;
             m_gameState = GameState::Game;
@@ -65,7 +67,7 @@ void SpriteGame::Update(float dt)
         m_spawnTimer -= dt;
         if (m_spawnTimer <= 0.0f)
         {
-            m_spawnTimer = m_spawnTime;
+            m_spawnTimer =m_spawnTime;
             SpawnEnemy();
             // increase difficulty
             m_spawnCount++;
@@ -93,6 +95,8 @@ void SpriteGame::Update(float dt)
 
 void SpriteGame::Draw(nu::Renderer& renderer)
 {
+    renderer.EnableCamera(false);
+
     renderer.DrawTexture(*nu::Resources().Get<Texture>("textures/background.jpg", Engine::Instance().GetRenderer()), Engine::Instance().GetRenderer().GetWidth() * 0.5f, Engine::Instance().GetRenderer().GetHeight() * 0.5f);
 
     switch (m_gameState)
@@ -106,7 +110,7 @@ void SpriteGame::Draw(nu::Renderer& renderer)
     case GameState::Game:
         // draw score / lives
         m_scoreText->Create(renderer, "Score: " + std::to_string(m_score), { 1.0f, 1.0f, 1.0f });
-        m_scoreText->Draw(renderer, 30, 30);
+        m_scoreText->Draw(renderer, 130, 30);
 
         m_livesText->Create(renderer, "Lives: " + std::to_string(m_lives), { 1.0f, 1.0f, 1.0f });
         m_livesText->Draw(renderer, (float)renderer.GetWidth() - 160, 30.0f);
@@ -119,6 +123,7 @@ void SpriteGame::Draw(nu::Renderer& renderer)
         break;
     }
 
+    renderer.EnableCamera();
     Game::Draw(renderer);
 }
 
@@ -141,13 +146,13 @@ void SpriteGame::SpawnEnemy()
     int enemyIndex = nu::RandomInt(2);
     if (enemyIndex == 0)
     {
-        auto actor = Factory::Instance().Create<Actor>("EnemyPrototype");
+        auto actor = Factory::Instance().Create<Actor>("FlyingEnemyPrototype");
         actor->SetPosition({ nu::RandomFloat(1024.0f), nu::RandomFloat(800.0f) });
         m_scene->AddActor(std::move(actor));
     }
     else if (enemyIndex == 1)
     {
-        auto actor = Factory::Instance().Create<Actor>("EnemyPrototype");
+        auto actor = Factory::Instance().Create<Actor>("FlyingEnemyPrototype");
         actor->SetPosition({ nu::RandomFloat(1024.0f), nu::RandomFloat(800.0f) });
         m_scene->AddActor(std::move(actor));
     }

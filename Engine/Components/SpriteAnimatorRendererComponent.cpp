@@ -55,6 +55,8 @@ namespace nu
 
 	void SpriteAnimatorRendererComponent::Play(const std::string& name)
 	{
+		if (EqualsIgnoreCase(name, m_spriteAnimation.name)) return;
+
 		auto iter = m_spriteAnimations.find(ToLower(name));
 		if (iter == m_spriteAnimations.end())
 		{

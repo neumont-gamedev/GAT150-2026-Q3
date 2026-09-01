@@ -164,6 +164,9 @@
     <ClCompile Include="SpaceGame\Enemy.cpp" />
     <ClCompile Include="SpaceGame\Player.cpp" />
     <ClCompile Include="SpaceGame\SpaceGame.cpp" />
+    <ClCompile Include="SpriteGame\EnemyController.cpp" />
+    <ClCompile Include="SpriteGame\FlyingEnemyController.cpp" />
+    <ClCompile Include="SpriteGame\PlayerController.cpp" />
     <ClCompile Include="SpriteGame\SpriteGame.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -176,11 +179,15 @@
     <ClInclude Include="SpaceGame\Enemy.h" />
     <ClInclude Include="SpaceGame\Player.h" />
     <ClInclude Include="SpaceGame\SpaceGame.h" />
+    <ClInclude Include="SpriteGame\EnemyController.h" />
+    <ClInclude Include="SpriteGame\FlyingEnemyController.h" />
+    <ClInclude Include="SpriteGame\PlayerController.h" />
     <ClInclude Include="SpriteGame\SpriteGame.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Build\Assets\SpriteGame\Animations\bat_idle.json" />
     <None Include="..\Build\Assets\SpriteGame\Animations\goblin_run.json" />
+    <None Include="..\Build\Assets\SpriteGame\Scenes\level.json" />
     <None Include="..\Build\Assets\SpriteGame\Scenes\scene.json" />
     <None Include="..\Build\Assets\SpriteGame\Tilemaps\world.json" />
   </ItemGroup>
