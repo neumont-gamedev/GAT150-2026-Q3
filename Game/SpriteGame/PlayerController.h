@@ -1,5 +1,5 @@
 #pragma once
-#include "Framework\Actor.h"
+#include "CharacterBase.h"
 
 namespace nu
 {
@@ -8,7 +8,7 @@ namespace nu
 }
 
 
-class PlayerController : public nu::Actor
+class PlayerController : public CharacterBase
 {
 public:
 	CLASS_PROTOTYPE(PlayerController)

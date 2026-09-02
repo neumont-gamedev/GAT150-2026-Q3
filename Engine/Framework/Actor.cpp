@@ -52,13 +52,9 @@ namespace nu
 
         for (auto& component : m_components)
         {
-            component->Update(dt);
+            if (component->IsActive())
+                component->Update(dt);
         }
-
-        // physics
-        //m_transform.position += (m_velocity * dt);
-        //m_velocity *= 1.0f / ((1.0f) + m_damping * dt);
-
     }
 
     void Actor::Draw(const Renderer& renderer) const
@@ -70,7 +66,8 @@ namespace nu
             if (rendererComponent)
             {
                 // draw renderer component
-                rendererComponent->Draw(renderer);
+                if (rendererComponent->IsActive())
+                    rendererComponent->Draw(renderer);
             }
         }
     }

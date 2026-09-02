@@ -164,6 +164,8 @@
     <ClCompile Include="SpaceGame\Enemy.cpp" />
     <ClCompile Include="SpaceGame\Player.cpp" />
     <ClCompile Include="SpaceGame\SpaceGame.cpp" />
+    <ClCompile Include="SpriteGame\CharacterBase.cpp" />
+    <ClCompile Include="SpriteGame\Damager.cpp" />
     <ClCompile Include="SpriteGame\EnemyController.cpp" />
     <ClCompile Include="SpriteGame\FlyingEnemyController.cpp" />
     <ClCompile Include="SpriteGame\PlayerController.cpp" />
@@ -179,6 +181,8 @@
     <ClInclude Include="SpaceGame\Enemy.h" />
     <ClInclude Include="SpaceGame\Player.h" />
     <ClInclude Include="SpaceGame\SpaceGame.h" />
+    <ClInclude Include="SpriteGame\CharacterBase.h" />
+    <ClInclude Include="SpriteGame\Damager.h" />
     <ClInclude Include="SpriteGame\EnemyController.h" />
     <ClInclude Include="SpriteGame\FlyingEnemyController.h" />
     <ClInclude Include="SpriteGame\PlayerController.h" />

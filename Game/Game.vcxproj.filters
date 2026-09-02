@@ -62,6 +62,12 @@
     <ClCompile Include="SpriteGame\FlyingEnemyController.cpp">
       <Filter>SpriteGame</Filter>
     </ClCompile>
+    <ClCompile Include="SpriteGame\Damager.cpp">
+      <Filter>SpriteGame</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteGame\CharacterBase.cpp">
+      <Filter>SpriteGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SpaceGame\SpaceGame.h">
@@ -86,6 +92,12 @@
       <Filter>SpriteGame</Filter>
     </ClInclude>
     <ClInclude Include="SpriteGame\FlyingEnemyController.h">
+      <Filter>SpriteGame</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteGame\CharacterBase.h">
+      <Filter>SpriteGame</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteGame\Damager.h">
       <Filter>SpriteGame</Filter>
     </ClInclude>
   </ItemGroup>
