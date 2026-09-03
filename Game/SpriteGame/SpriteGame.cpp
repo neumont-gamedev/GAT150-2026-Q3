@@ -95,9 +95,16 @@ void SpriteGame::Update(float dt)
 
 void SpriteGame::Draw(nu::Renderer& renderer)
 {
+    // DRAW BACKGROUND
     renderer.EnableCamera(false);
-
     renderer.DrawTexture(*nu::Resources().Get<Texture>("textures/bg03.png", Engine::Instance().GetRenderer()), Engine::Instance().GetRenderer().GetWidth() * 0.5f, Engine::Instance().GetRenderer().GetHeight() * 0.5f);
+
+    // DRAW GAME
+    renderer.EnableCamera();
+    Game::Draw(renderer);
+
+    // DRAW UI
+    renderer.EnableCamera(false);
 
     switch (m_gameState)
     {
@@ -123,8 +130,8 @@ void SpriteGame::Draw(nu::Renderer& renderer)
         break;
     }
 
-    renderer.EnableCamera();
-    Game::Draw(renderer);
+    renderer.EnableCamera(true);
+
 }
 
 void SpriteGame::OnPlayerDead()
