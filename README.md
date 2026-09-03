@@ -1,4 +1,6 @@
-﻿# Game Engine Architecture
+<img width="1273" height="1010" alt="image" src="https://github.com/user-attachments/assets/2b8db43e-16ec-422e-b630-aff9491b2829" />
+
+ # Game Engine Architecture
 
 A component-based game engine built with C++20, utilizing SDL3 for core systems, Box2D for physics, FMOD for audio, and RapidJSON for serialization.
 
